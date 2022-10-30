@@ -19,15 +19,15 @@ Clique [aqui](https://docs.google.com/document/d/1VuMgOgqID095fgwAZYU5_QYHJEwqrg
 
 ## ⚙ Funcionalidades
 
-- [] Carregamento de arquivos de entrada
-- [] Busca do n-ésimo elemento
-- [] Posição ocupada por um elemento
-- [] Mediana da árvore binária de busca
-- [] Média da árvore binária de busca
-- [] Verificar se árvore é cheia
-- [] Verificar se árvore é completa
-- [] Sequência de elementos em pré-ordem
-- [] Imprime árvore
+- [ ] Carregamento de arquivos de entrada
+- [ ] Busca do n-ésimo elemento
+- [ ] Posição ocupada por um elemento
+- [ ] Mediana da árvore binária de busca
+- [ ] Média da árvore binária de busca
+- [ ] Verificar se árvore é cheia
+- [ ] Verificar se árvore é completa
+- [ ] Sequência de elementos em pré-ordem
+- [ ] Imprime árvore
 
 ---
 
@@ -67,8 +67,6 @@ $ cd arvore-binaria-de-busca
 ...
 
 ```
-
-<br />
 
 ---
 
