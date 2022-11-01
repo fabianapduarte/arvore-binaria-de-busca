@@ -23,6 +23,25 @@ public class ArvoreBinariaBusca {
         return sequencia;
     }
 
+    public static void imprimir(No raiz, int tipo) {
+        if (tipo==2) {
+            System.out.print("(");
+            System.out.print(raiz.getChave());
+            for (int i = 0; i < raiz.getAltura(); i++) {
+                System.out.print(raiz.getChave());
+            }
+            if (raiz.getEsquerda() != null) {
+                System.out.print(" ");
+                imprimir(raiz.getEsquerda(), tipo);
+            }
+            if (raiz.getDireita() != null) {
+                System.out.print(" ");
+                imprimir(raiz.getDireita(), tipo);
+            }
+            System.out.print(")");
+        }
+    }
+
     public static boolean preencher(No raiz, int chave){
         boolean ret = true;
         if (chave<raiz.getChave()) {
@@ -98,14 +117,21 @@ public class ArvoreBinariaBusca {
                     // comando.equals("ENESIMO") comando.equals("INSIRA") comando.equals("IMPRIMA") 
                     // comando.equals("REMOVA") comando.equals("POSICAO") comando.equals("BUSCAR")
                     int chaveComando = sc.nextInt();
-                    if(comando.equals("INSIRA")){
-                        // System.out.println("COMANDO: "+comando+" NUMERO: "+chaveComando);
-                        if(preencher(raiz, chaveComando)){
-                            System.out.println(chaveComando+" adicionado");
-                        }else{
-                            System.out.println(chaveComando +" Já está na árvore, não pode ser inserido");
+                    switch (comando) {   
+                        case "INSIRA":   
+                            if(preencher(raiz, chaveComando)){
+                                System.out.println(chaveComando+" adicionado");
+                            }else{
+                                System.out.println(chaveComando +" Já está na árvore, não pode ser inserido");
+                            }
+                            break;  
+                        case "IMPRIMA": 
+                            imprimir(raiz, chaveComando);
+                            System.out.println();
+                            break;  
+                        default:   
+                            System.out.println("Comando não encontrado");  
                         }
-                    }
                 } else {
                     if(comando.equals("PREORDEM")){
                         String sequencia = "";
