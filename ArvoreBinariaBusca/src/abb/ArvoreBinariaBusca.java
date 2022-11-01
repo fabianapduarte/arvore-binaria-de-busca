@@ -62,6 +62,26 @@ public class ArvoreBinariaBusca {
         return ret;
     }
 
+    public static boolean remover(No raiz, int chave){
+        boolean ret = true;
+        No esquerda = raiz.getEsquerda();
+        No direita = raiz.getDireita();
+        if (esquerda!=null && chave==esquerda.getChave()) {
+            raiz.setEsquerda(null);
+        }else if (direita!=null && chave==direita.getChave()) {
+            raiz.setDireita(null);
+        }else{
+            if (chave<raiz.getChave() && esquerda!=null) {
+                ret = remover(esquerda, chave);
+            }else if(chave>raiz.getChave() && direita!=null){
+                ret = remover(direita, chave);
+            }else{
+                return false;
+            }
+        }
+        return ret;
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -127,7 +147,14 @@ public class ArvoreBinariaBusca {
                             break;  
                         case "IMPRIMA": 
                             imprimir(raiz, chaveComando);
-                            System.out.println();
+                            System.out.println("");
+                            break;  
+                        case "REMOVA": 
+                            if(remover(raiz, chaveComando)){
+                                System.out.println(chaveComando+" removido");
+                            }else{
+                                System.out.println(chaveComando +" não está na árvore, não pode ser removido");
+                            }
                             break;  
                         default:   
                             System.out.println("Comando não encontrado");  
