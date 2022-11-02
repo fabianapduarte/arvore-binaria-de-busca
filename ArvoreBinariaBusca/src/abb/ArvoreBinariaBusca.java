@@ -23,8 +23,64 @@ public class ArvoreBinariaBusca {
         return sequencia;
     }
 
+    public static void visitaAltura(No raiz){
+        int alt1, alt2; 
+        if (raiz.getEsquerda() == null) {
+            alt1=0;
+        }else{
+            alt1=raiz.getEsquerda().getAltura();
+        }
+        
+        if (raiz.getDireita() == null) {
+            alt2=0;
+        }else{
+            alt2=raiz.getDireita().getAltura();
+        }
+        
+        if (alt1>alt2) {
+            raiz.setAltura(alt1+1);
+        }else{
+            raiz.setAltura(alt2+1);
+        }
+    }
+
+    public static void calcularAltura(No raiz){
+        if (raiz.getEsquerda()!=null) {
+            calcularAltura(raiz.getEsquerda());
+        }
+        if (raiz.getDireita()!=null) {
+            calcularAltura(raiz.getDireita());
+        }
+        visitaAltura(raiz);
+    }
+
+    public static void formato1(No raiz, String espaco, String fill){
+        if (raiz!=null) {
+            System.out.print(espaco+raiz.getChave());
+            int digitos = Integer.toString(raiz.getChave()).length();
+            String fillPrint = fill.substring(0, fill.length()-digitos+1);
+            System.out.print(fillPrint);
+            System.out.print('\n');
+            espaco = espaco.concat("      ");
+            fill = fill.substring(0, fill.length()-6);
+            if (raiz.getEsquerda()!=null) {
+                formato1(raiz.getEsquerda(), espaco, fill);
+            }
+            if (raiz.getDireita()!=null) {
+                formato1(raiz.getDireita(), espaco, fill);
+            }
+        }
+    }
+
     public static void imprimir(No raiz, int tipo) {
-        if (tipo==2) {
+        if (tipo==1) {
+            String espaco = "";
+            String fill = "";
+            for (int i = 0; i < raiz.getAltura()*6; i++) {
+                fill = fill.concat("-");
+            }
+            formato1(raiz, espaco, fill);
+        } else {
             System.out.print("(");
             System.out.print(raiz.getChave());
             for (int i = 0; i < raiz.getAltura(); i++) {
@@ -133,6 +189,7 @@ public class ArvoreBinariaBusca {
             System.out.println("Raiz inválida!");
         }
 
+        calcularAltura(raiz);
         contarSubNos(raiz);
         // System.out.println(raiz.getSubEsquerda()); //3
         // System.out.println(raiz.getSubDireita()); //2
