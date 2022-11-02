@@ -82,6 +82,25 @@ public class ArvoreBinariaBusca {
         return ret;
     }
 
+    public static void contarSubNos(No raiz){
+        if (raiz.getEsquerda()==null){
+            raiz.setSubEsquerda(0);
+        }else{
+            contarSubNos(raiz.getEsquerda());
+        }
+        if (raiz.getDireita()==null){
+            raiz.setSubDireita(0);
+        }else{
+            contarSubNos(raiz.getDireita());  
+        }
+        if (raiz.getEsquerda()!=null) {
+            raiz.setSubEsquerda(raiz.getEsquerda().getSubEsquerda()+raiz.getEsquerda().getSubDireita()+1);
+        }
+        if (raiz.getDireita()!=null) {
+            raiz.setSubDireita(raiz.getDireita().getSubEsquerda()+raiz.getDireita().getSubDireita()+1);
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -113,6 +132,15 @@ public class ArvoreBinariaBusca {
             raiz = null;
             System.out.println("Raiz inválida!");
         }
+
+        contarSubNos(raiz);
+        // System.out.println(raiz.getSubEsquerda()); //3
+        // System.out.println(raiz.getSubDireita()); //2
+        // System.out.println(raiz.getEsquerda().getSubEsquerda()); //1
+        // System.out.println(raiz.getEsquerda().getSubDireita()); //1
+        // System.out.println(raiz.getEsquerda().getEsquerda().getSubDireita()); //0
+        // System.out.println(raiz.getDireita().getSubDireita()); //1
+        // System.out.println(raiz.getDireita().getSubEsquerda()); //0
 
         //Leitura dos comandos
         rel = "../../entrada/"+args[1]+".txt";
