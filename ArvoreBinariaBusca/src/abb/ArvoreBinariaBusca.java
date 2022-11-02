@@ -72,6 +72,20 @@ public class ArvoreBinariaBusca {
         }
     }
 
+    public static void formato2(No raiz){
+        System.out.print("(");
+        System.out.print(raiz.getChave());
+        if (raiz.getEsquerda() != null) {
+            System.out.print(" ");
+            formato2(raiz.getEsquerda());
+        }
+        if (raiz.getDireita() != null) {
+            System.out.print(" ");
+            formato2(raiz.getDireita());
+        }
+        System.out.print(")");
+    }
+
     public static void imprimir(No raiz, int tipo) {
         if (tipo==1) {
             String espaco = "";
@@ -81,20 +95,8 @@ public class ArvoreBinariaBusca {
             }
             formato1(raiz, espaco, fill);
         } else {
-            System.out.print("(");
-            System.out.print(raiz.getChave());
-            for (int i = 0; i < raiz.getAltura(); i++) {
-                System.out.print(raiz.getChave());
-            }
-            if (raiz.getEsquerda() != null) {
-                System.out.print(" ");
-                imprimir(raiz.getEsquerda(), tipo);
-            }
-            if (raiz.getDireita() != null) {
-                System.out.print(" ");
-                imprimir(raiz.getDireita(), tipo);
-            }
-            System.out.print(")");
+            formato2(raiz);
+            System.out.print('\n');
         }
     }
 
@@ -226,17 +228,20 @@ public class ArvoreBinariaBusca {
                         case "INSIRA":   
                             if(preencher(raiz, chaveComando)){
                                 System.out.println(chaveComando+" adicionado");
+                                calcularAltura(raiz);
+                                contarSubNos(raiz);
                             }else{
                                 System.out.println(chaveComando +" Já está na árvore, não pode ser inserido");
                             }
                             break;  
                         case "IMPRIMA": 
                             imprimir(raiz, chaveComando);
-                            System.out.println("");
                             break;  
                         case "REMOVA": 
                             if(remover(raiz, chaveComando)){
                                 System.out.println(chaveComando+" removido");
+                                calcularAltura(raiz);
+                                contarSubNos(raiz);
                             }else{
                                 System.out.println(chaveComando +" não está na árvore, não pode ser removido");
                             }
