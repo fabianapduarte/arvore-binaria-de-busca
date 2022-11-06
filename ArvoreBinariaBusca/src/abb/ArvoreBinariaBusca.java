@@ -190,6 +190,16 @@ public class ArvoreBinariaBusca {
         }
     }
 
+    public static int mediana(No raiz) {
+        int totalElementos = raiz.getQtdNosEsquerda() + raiz.getQtdNosDireita() + 1;
+
+        if (totalElementos % 2 == 1) {
+            return enesimoElemento(raiz, (totalElementos / 2) + 1);
+        } else {
+            return enesimoElemento(raiz, totalElementos / 2);
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -251,12 +261,13 @@ public class ArvoreBinariaBusca {
 
                 Scanner sc = new Scanner(line);
                 String comando = sc.next();
-                if (comando.matches("ENESIMO|INSIRA|IMPRIMA|REMOVA|POSICAO|BUSCAR|MEDIA")) {
+                if (comando.matches("ENESIMO|INSIRA|IMPRIMA|REMOVA|POSICAO|BUSCAR|MEDIA|MEDIANA")) {
                     // comando.equals("ENESIMO") comando.equals("INSIRA") comando.equals("IMPRIMA")
                     // comando.equals("REMOVA") comando.equals("POSICAO") comando.equals("BUSCAR")
-                    int chaveComando = sc.nextInt();
+                    int chaveComando;
                     switch (comando) {
                         case "INSIRA":
+                            chaveComando = sc.nextInt();
                             if (preencher(raiz, chaveComando)) {
                                 System.out.println(chaveComando + " adicionado");
                                 calcularAltura(raiz);
@@ -266,9 +277,11 @@ public class ArvoreBinariaBusca {
                             }
                             break;
                         case "IMPRIMA":
+                            chaveComando = sc.nextInt();
                             imprimir(raiz, chaveComando);
                             break;
                         case "REMOVA":
+                            chaveComando = sc.nextInt();
                             if (remover(raiz, chaveComando)) {
                                 System.out.println(chaveComando + " removido");
                                 calcularAltura(raiz);
@@ -278,12 +291,18 @@ public class ArvoreBinariaBusca {
                             }
                             break;
                         case "POSICAO":
+                            chaveComando = sc.nextInt();
                             int posicao = posicao(raiz, chaveComando, 0);
                             System.out.println(posicao);
                             break;
                         case "ENESIMO":
+                            chaveComando = sc.nextInt();
                             int elemento = enesimoElemento(raiz, chaveComando);
                             System.out.println(elemento);
+                            break;
+                        case "MEDIANA":
+                            int mediana = mediana(raiz);
+                            System.out.println(mediana);
                             break;
                         default:
                             System.out.println("Comando não encontrado");
