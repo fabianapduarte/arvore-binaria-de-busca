@@ -92,7 +92,11 @@ public class mainAbb {
                             case "ENESIMO":
                                 int elemento = ArvoreBinariaBusca.enesimoElemento(raiz, chaveComando);
                                 System.out.println(elemento);
-                                break; 
+                                break;
+                            case "MEDIA":
+                                double media = ArvoreBinariaBusca.media(raiz, chaveComando);
+                                System.out.println(String.format("%,.3f", media));
+                                break;
                             default:   
                                 System.out.println("Comando não encontrado");  
                             }

@@ -269,4 +269,41 @@ public class ArvoreBinariaBusca {
             return enesimoElemento(raiz, totalElementos / 2);
         }
     }
+
+    public static No buscar(No raiz, int elemento) {
+        if (raiz != null) {
+            if (raiz.getChave() == elemento) {
+                return raiz;
+            } else if (raiz.getChave() > elemento) {
+                return buscar(raiz.getEsquerda(), elemento);
+            } else {
+                return buscar(raiz.getDireita(), elemento);
+            }
+        } else {
+            return null;
+        }
+    }
+
+    public static double media(No raiz, int elemento) {
+        No noParaMedia = buscar(raiz, elemento);
+        int soma = somaElementos(noParaMedia, 0);
+        int totalElementos = noParaMedia.getQtdNosEsquerda() + noParaMedia.getQtdNosDireita() + 1;
+        return (double) soma / totalElementos;
+    }
+
+    public static int somaElementos(No raiz, int somaAnterior) {
+        int soma = somaAnterior;
+
+        if (raiz.getEsquerda() != null) {
+            soma = somaElementos(raiz.getEsquerda(), soma);
+        }
+
+        soma += raiz.getChave();
+
+        if (raiz.getDireita() != null) {
+            soma = somaElementos(raiz.getDireita(), soma);
+        }
+
+        return soma;
+    }
 }
