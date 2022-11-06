@@ -161,21 +161,17 @@ public class ArvoreBinariaBusca {
 
     public static int posicao(No raiz, int elemento, int somaNosAnteriores) {
         int novaSoma;
-        // System.out.println("chave: " + raiz.getChave());
-        // System.out.println("soma: " + somaNosAnteriores);
-        // System.out.println("nosEsquerda: " + raiz.getQtdNosEsquerda());
-        // System.out.println("nosDireita: " + raiz.getQtdNosDireita());
-        // System.out.println();
 
         if (raiz.getChave() == elemento) {
             return somaNosAnteriores + raiz.getQtdNosEsquerda() + 1;
         } else if (raiz.getChave() > elemento) {
+            No noEsquerda = raiz.getEsquerda();
             if (somaNosAnteriores != 0) {
-                novaSoma = somaNosAnteriores - raiz.getQtdNosEsquerda() + raiz.getQtdNosDireita() + 1;
+                novaSoma = somaNosAnteriores + raiz.getQtdNosEsquerda() - noEsquerda.getQtdNosEsquerda() - noEsquerda.getQtdNosDireita() - 1;
             } else {
                 novaSoma = 0;
             }
-            return posicao(raiz.getEsquerda(), elemento, novaSoma);
+            return posicao(noEsquerda, elemento, novaSoma);
         } else {
             novaSoma = somaNosAnteriores + raiz.getQtdNosEsquerda() + 1;
             return posicao(raiz.getDireita(), elemento, novaSoma);
