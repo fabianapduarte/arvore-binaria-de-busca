@@ -148,7 +148,6 @@ public class ArvoreBinariaBusca {
     public static boolean isFolha(No raiz){
         return (raiz.getEsquerda()==null && raiz.getDireita()==null);
     }
-
     public static boolean subArvoresNaoVazias(No raiz){
         return (raiz.getEsquerda()!=null && raiz.getDireita()!=null);
     }
@@ -161,15 +160,30 @@ public class ArvoreBinariaBusca {
         return no;
     }
     
-    public static int maior(No raiz){
-        No no = raiz.getEsquerda();
-        while(no.getDireita()!=null){
-            no=no.getDireita();
+    public static int trocar(No raiz){
+        No no = raiz.getDireita();
+        while(no.getEsquerda()!=null){
+            no=no.getEsquerda();
         }
-        int ret = no.getChave();
+        int ret = no.getChave(); //60
         no.setChave(raiz.getChave());
-        no.setEsquerda(null);
-        no.setDireita(null);
+        return ret;
+    }
+
+    public static boolean apagarFilho(No raiz, int chave){
+        boolean ret = true;
+        if (isFolha(raiz.getDireita())) {
+            raiz.setDireita(null);
+        } else if(subArvoresNaoVazias(raiz.getDireita())){
+            return remover(raiz.getDireita(), chave);
+        }else{
+            No node = filhoNaoNulo(raiz.getDireita());
+            if(node.getChave()>raiz.getChave()){
+                raiz.setDireita(node);
+            }else{ 
+                raiz.setEsquerda(node);
+            }
+        }
         return ret;
     }
 
@@ -177,12 +191,23 @@ public class ArvoreBinariaBusca {
         boolean ret = true;
         No esquerda = raiz.getEsquerda();
         No direita = raiz.getDireita();
-        if (esquerda != null && chave == esquerda.getChave()) {
+
+        if(chave==raiz.getChave()){
+            if(subArvoresNaoVazias(raiz)) {
+                raiz.setChave(trocar(raiz));
+                apagarFilho(raiz, chave);
+            }else{
+                No node = filhoNaoNulo(raiz);
+                raiz.setChave(node.getChave());
+                raiz.setEsquerda(node.getEsquerda());
+                raiz.setDireita(node.getDireita());
+            }
+        } else if (esquerda != null && chave == esquerda.getChave()) {
             if(isFolha(esquerda)){
                 raiz.setEsquerda(null);
             }else if(subArvoresNaoVazias(esquerda)) {
-                esquerda.setChave(maior(esquerda));
-                ret = remover(esquerda.getEsquerda(), chave);
+                esquerda.setChave(trocar(esquerda));
+                apagarFilho(esquerda, chave);
             }else{
                 raiz.setEsquerda(filhoNaoNulo(esquerda));
             }
@@ -190,8 +215,8 @@ public class ArvoreBinariaBusca {
             if(isFolha(direita)){
                 raiz.setDireita(null);
             }else if(subArvoresNaoVazias(direita)){
-                direita.setChave(maior(direita));
-                ret = remover(direita.getEsquerda(), chave);
+                direita.setChave(trocar(direita));
+                apagarFilho(direita, chave);
             }else{
                 raiz.setDireita(filhoNaoNulo(direita));
             }
@@ -200,10 +225,7 @@ public class ArvoreBinariaBusca {
                 ret = remover(esquerda, chave);
             } else if (chave > raiz.getChave() && direita != null) {
                 ret = remover(direita, chave);
-            }else if(chave==raiz.getChave()){
-                System.out.println("root "+raiz.getChave());
-                raiz = (null);
-            } else {
+            }else {
                 return false;
             }
         }
