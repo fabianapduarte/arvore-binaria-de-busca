@@ -4,8 +4,8 @@ public class No {
     private int chave;
     private No esquerda;
     private No direita;
-    private int subEsquerda;
-    private int subDireita;
+    private int qtdNosEsquerda;
+    private int qtdNosDireita;
     private int altura;
 
     public No(int chave) {
@@ -36,20 +36,20 @@ public class No {
       this.direita = direita;
     }
 
-    public int getSubEsquerda(){
-      return subEsquerda;
+    public int getQtdNosEsquerda(){
+      return qtdNosEsquerda;
     }
 
-    public void setSubEsquerda(int subEsquerda){
-      this.subEsquerda = subEsquerda;
+    public void setQtdNosEsquerda(int qtdNosEsquerda){
+      this.qtdNosEsquerda = qtdNosEsquerda;
     }
 
-    public int getSubDireita(){
-      return subDireita;
+    public int getQtdNosDireita(){
+      return qtdNosDireita;
     }
 
-    public void setSubDireita(int subDireita){
-      this.subDireita = subDireita;
+    public void setQtdNosDireita(int qtdNosDireita){
+      this.qtdNosDireita = qtdNosDireita;
     }
 
     public int getAltura(){

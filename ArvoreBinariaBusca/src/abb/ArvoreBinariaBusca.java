@@ -7,7 +7,7 @@ package abb;
 public class ArvoreBinariaBusca {
 
     public static String preOrdem(No raiz, String sequenciaAnterior) {
-        String sequencia = sequenciaAnterior + String.valueOf(raiz.getChave())+" ";
+        String sequencia = sequenciaAnterior + String.valueOf(raiz.getChave()) + " ";
 
         if (raiz.getEsquerda() != null) {
             sequencia = preOrdem(raiz.getEsquerda(), sequencia);
@@ -19,56 +19,56 @@ public class ArvoreBinariaBusca {
         return sequencia;
     }
 
-    public static void visitaAltura(No raiz){
-        int alt1, alt2; 
+    public static void visitaAltura(No raiz) {
+        int alt1, alt2;
         if (raiz.getEsquerda() == null) {
-            alt1=0;
-        }else{
-            alt1=raiz.getEsquerda().getAltura();
+            alt1 = 0;
+        } else {
+            alt1 = raiz.getEsquerda().getAltura();
         }
-        
+
         if (raiz.getDireita() == null) {
-            alt2=0;
-        }else{
-            alt2=raiz.getDireita().getAltura();
+            alt2 = 0;
+        } else {
+            alt2 = raiz.getDireita().getAltura();
         }
-        
-        if (alt1>alt2) {
-            raiz.setAltura(alt1+1);
-        }else{
-            raiz.setAltura(alt2+1);
+
+        if (alt1 > alt2) {
+            raiz.setAltura(alt1 + 1);
+        } else {
+            raiz.setAltura(alt2 + 1);
         }
     }
 
-    public static void calcularAltura(No raiz){
-        if (raiz.getEsquerda()!=null) {
+    public static void calcularAltura(No raiz) {
+        if (raiz.getEsquerda() != null) {
             calcularAltura(raiz.getEsquerda());
         }
-        if (raiz.getDireita()!=null) {
+        if (raiz.getDireita() != null) {
             calcularAltura(raiz.getDireita());
         }
         visitaAltura(raiz);
     }
 
-    public static void formato1(No raiz, String espaco, String fill){
-        if (raiz!=null) {
-            System.out.print(espaco+raiz.getChave());
+    public static void formato1(No raiz, String espaco, String fill) {
+        if (raiz != null) {
+            System.out.print(espaco + raiz.getChave());
             int digitos = Integer.toString(raiz.getChave()).length();
-            String fillPrint = fill.substring(0, fill.length()-digitos+1);
+            String fillPrint = fill.substring(0, fill.length() - digitos + 1);
             System.out.print(fillPrint);
             System.out.print('\n');
             espaco = espaco.concat("      ");
-            fill = fill.substring(0, fill.length()-6);
-            if (raiz.getEsquerda()!=null) {
+            fill = fill.substring(0, fill.length() - 6);
+            if (raiz.getEsquerda() != null) {
                 formato1(raiz.getEsquerda(), espaco, fill);
             }
-            if (raiz.getDireita()!=null) {
+            if (raiz.getDireita() != null) {
                 formato1(raiz.getDireita(), espaco, fill);
             }
         }
     }
 
-    public static void formato2(No raiz){
+    public static void formato2(No raiz) {
         System.out.print("(");
         System.out.print(raiz.getChave());
         if (raiz.getEsquerda() != null) {
@@ -83,10 +83,10 @@ public class ArvoreBinariaBusca {
     }
 
     public static void imprimir(No raiz, int tipo) {
-        if (tipo==1) {
+        if (tipo == 1) {
             String espaco = "";
             String fill = "";
-            for (int i = 0; i < raiz.getAltura()*6; i++) {
+            for (int i = 0; i < raiz.getAltura() * 6; i++) {
                 fill = fill.concat("-");
             }
             formato1(raiz, espaco, fill);
@@ -96,21 +96,21 @@ public class ArvoreBinariaBusca {
         }
     }
 
-    public static boolean preencher(No raiz, int chave){
+    public static boolean preencher(No raiz, int chave) {
         boolean ret = true;
-        if (chave<raiz.getChave()) {
-            if (raiz.getEsquerda()==null) {
+        if (chave < raiz.getChave()) {
+            if (raiz.getEsquerda() == null) {
                 raiz.setEsquerda(new No(chave));
             } else {
                 ret = preencher(raiz.getEsquerda(), chave);
             }
-        } else if(chave>raiz.getChave()){
-            if (raiz.getDireita()==null) {
+        } else if (chave > raiz.getChave()) {
+            if (raiz.getDireita() == null) {
                 raiz.setDireita(new No(chave));
             } else {
                 ret = preencher(raiz.getDireita(), chave);
             }
-        }else{
+        } else {
             return false;
         }
         return ret;
@@ -173,11 +173,11 @@ public class ArvoreBinariaBusca {
         return ret;
     }
 
-    public static boolean remover(No raiz, int chave){
+    public static boolean remover(No raiz, int chave) {
         boolean ret = true;
         No esquerda = raiz.getEsquerda();
         No direita = raiz.getDireita();
-        if (esquerda!=null && chave==esquerda.getChave()) {
+        if (esquerda != null && chave == esquerda.getChave()) {
             if(isFolha(esquerda)){
                 raiz.setEsquerda(null);
             }else if(subArvoresNaoVazias(esquerda)) {
@@ -186,7 +186,7 @@ public class ArvoreBinariaBusca {
             }else{
                 raiz.setEsquerda(filhoNaoNulo(esquerda));
             }
-        }else if (direita!=null && chave==direita.getChave()) {
+        } else if (direita != null && chave == direita.getChave()) {
             if(isFolha(direita)){
                 raiz.setDireita(null);
             }else if(subArvoresNaoVazias(direita)){
@@ -195,37 +195,60 @@ public class ArvoreBinariaBusca {
             }else{
                 raiz.setDireita(filhoNaoNulo(direita));
             }
-        }else{
-            if (chave<raiz.getChave() && esquerda!=null) {
+        } else {
+            if (chave < raiz.getChave() && esquerda != null) {
                 ret = remover(esquerda, chave);
-            }else if(chave>raiz.getChave() && direita!=null){
+            } else if (chave > raiz.getChave() && direita != null) {
                 ret = remover(direita, chave);
             }else if(chave==raiz.getChave()){
                 System.out.println("root "+raiz.getChave());
                 raiz = (null);
-            }else{
+            } else {
                 return false;
             }
         }
         return ret;
     }
 
-    public static void contarSubNos(No raiz){
-        if (raiz.getEsquerda()==null){
-            raiz.setSubEsquerda(0);
-        }else{
+    public static void contarSubNos(No raiz) {
+        if (raiz.getEsquerda() == null) {
+            raiz.setQtdNosEsquerda(0);
+        } else {
             contarSubNos(raiz.getEsquerda());
         }
-        if (raiz.getDireita()==null){
-            raiz.setSubDireita(0);
-        }else{
-            contarSubNos(raiz.getDireita());  
+        if (raiz.getDireita() == null) {
+            raiz.setQtdNosDireita(0);
+        } else {
+            contarSubNos(raiz.getDireita());
         }
-        if (raiz.getEsquerda()!=null) {
-            raiz.setSubEsquerda(raiz.getEsquerda().getSubEsquerda()+raiz.getEsquerda().getSubDireita()+1);
+        if (raiz.getEsquerda() != null) {
+            raiz.setQtdNosEsquerda(raiz.getEsquerda().getQtdNosEsquerda() + raiz.getEsquerda().getQtdNosDireita() + 1);
         }
-        if (raiz.getDireita()!=null) {
-            raiz.setSubDireita(raiz.getDireita().getSubEsquerda()+raiz.getDireita().getSubDireita()+1);
+        if (raiz.getDireita() != null) {
+            raiz.setQtdNosDireita(raiz.getDireita().getQtdNosEsquerda() + raiz.getDireita().getQtdNosDireita() + 1);
+        }
+    }
+
+    public static int posicao(No raiz, int elemento, int somaNosAnteriores) {
+        int novaSoma;
+        // System.out.println("chave: " + raiz.getChave());
+        // System.out.println("soma: " + somaNosAnteriores);
+        // System.out.println("nosEsquerda: " + raiz.getQtdNosEsquerda());
+        // System.out.println("nosDireita: " + raiz.getQtdNosDireita());
+        // System.out.println();
+
+        if (raiz.getChave() == elemento) {
+            return somaNosAnteriores + raiz.getQtdNosEsquerda() + 1;
+        } else if (raiz.getChave() > elemento) {
+            if (somaNosAnteriores != 0) {
+                novaSoma = somaNosAnteriores - raiz.getQtdNosEsquerda() + raiz.getQtdNosDireita() + 1;
+            } else {
+                novaSoma = 0;
+            }
+            return posicao(raiz.getEsquerda(), elemento, novaSoma);
+        } else {
+            novaSoma = somaNosAnteriores + raiz.getQtdNosEsquerda() + 1;
+            return posicao(raiz.getDireita(), elemento, novaSoma);
         }
     }
 }
