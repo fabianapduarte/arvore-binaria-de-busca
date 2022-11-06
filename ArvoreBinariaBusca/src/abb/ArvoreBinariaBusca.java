@@ -178,6 +178,18 @@ public class ArvoreBinariaBusca {
         }
     }
 
+    public static int enesimoElemento(No raiz, int posicao) {
+        int posicaoAtual = raiz.getQtdNosEsquerda() + 1;
+
+        if (posicaoAtual == posicao) {
+            return raiz.getChave();
+        } else if (posicaoAtual > posicao) {
+            return enesimoElemento(raiz.getEsquerda(), posicao);
+        } else {
+            return enesimoElemento(raiz.getDireita(), posicao - raiz.getQtdNosEsquerda() - 1);
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -268,6 +280,10 @@ public class ArvoreBinariaBusca {
                         case "POSICAO":
                             int posicao = posicao(raiz, chaveComando, 0);
                             System.out.println(posicao);
+                            break;
+                        case "ENESIMO":
+                            int elemento = enesimoElemento(raiz, chaveComando);
+                            System.out.println(elemento);
                             break;
                         default:
                             System.out.println("Comando não encontrado");
