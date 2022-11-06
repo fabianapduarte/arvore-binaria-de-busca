@@ -1,9 +1,5 @@
 package abb;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-
 /**
  *
  * @author Fabiana Pereira e Samuel Costa
@@ -120,19 +116,93 @@ public class ArvoreBinariaBusca {
         return ret;
     }
 
+    public static boolean ehCheia(No raiz, int altura){
+        boolean ret = true;
+        if ((raiz.getDireita()==null || raiz.getEsquerda()==null) && altura!=1) { //folha
+            return false;
+        }
+        if(raiz.getEsquerda()!=null){
+            ret = ehCheia(raiz.getEsquerda(), altura-1);
+        }
+        if(raiz.getDireita()!=null){
+            ret = ehCheia(raiz.getDireita(), altura-1);
+        }
+        return ret;
+    }
+
+    public static boolean ehCompleta(No raiz, int altura){
+        boolean ret = true;
+        boolean vazio = (raiz.getDireita()==null || raiz.getEsquerda()==null);
+        if ((vazio && altura>2)) { //folha
+            return false;
+        }
+        if(raiz.getEsquerda()!=null){
+            ret = ehCompleta(raiz.getEsquerda(), altura-1);
+        }
+        if(raiz.getDireita()!=null){
+            ret = ehCompleta(raiz.getDireita(), altura-1);
+        }
+        return ret;
+    }
+
+    public static boolean isFolha(No raiz){
+        return (raiz.getEsquerda()==null && raiz.getDireita()==null);
+    }
+
+    public static boolean subArvoresNaoVazias(No raiz){
+        return (raiz.getEsquerda()!=null && raiz.getDireita()!=null);
+    }
+
+    public static No filhoNaoNulo(No raiz){
+        No no = raiz.getEsquerda();
+        if (no == null) {
+            no = raiz.getDireita();
+        }
+        return no;
+    }
+    
+    public static int maior(No raiz){
+        No no = raiz.getEsquerda();
+        while(no.getDireita()!=null){
+            no=no.getDireita();
+        }
+        int ret = no.getChave();
+        no.setChave(raiz.getChave());
+        no.setEsquerda(null);
+        no.setDireita(null);
+        return ret;
+    }
+
     public static boolean remover(No raiz, int chave){
         boolean ret = true;
         No esquerda = raiz.getEsquerda();
         No direita = raiz.getDireita();
         if (esquerda!=null && chave==esquerda.getChave()) {
-            raiz.setEsquerda(null);
+            if(isFolha(esquerda)){
+                raiz.setEsquerda(null);
+            }else if(subArvoresNaoVazias(esquerda)) {
+                esquerda.setChave(maior(esquerda));
+                ret = remover(esquerda.getEsquerda(), chave);
+            }else{
+                raiz.setEsquerda(filhoNaoNulo(esquerda));
+            }
         }else if (direita!=null && chave==direita.getChave()) {
-            raiz.setDireita(null);
+            if(isFolha(direita)){
+                raiz.setDireita(null);
+            }else if(subArvoresNaoVazias(direita)){
+                direita.setChave(maior(direita));
+                ret = remover(direita.getEsquerda(), chave);
+            }else{
+                raiz.setDireita(filhoNaoNulo(direita));
+            }
         }else{
             if (chave<raiz.getChave() && esquerda!=null) {
                 ret = remover(esquerda, chave);
             }else if(chave>raiz.getChave() && direita!=null){
                 ret = remover(direita, chave);
+            }else if(chave==raiz.getChave()){
+                System.out.println("root "+raiz.getChave());
+                raiz = (null);
             }else{
                 return false;
             }
@@ -157,108 +227,5 @@ public class ArvoreBinariaBusca {
         if (raiz.getDireita()!=null) {
             raiz.setSubDireita(raiz.getDireita().getSubEsquerda()+raiz.getDireita().getSubDireita()+1);
         }
-    }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        No raiz;
-        String abs = ArvoreBinariaBusca.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-        String rel = "../../entrada/"+args[0]+".txt";
-        File file = new File(abs+rel);
-
-        //Leitura da arvore
-        Scanner scan;
-        if (!file.exists()){
-            file = new File(abs+"../"+rel);
-            if (!file.exists()){
-                System.out.println("Nome de arquivo errado!");
-                System.exit(0);
-            }
-        }
-        
-        try {
-            scan = new Scanner(file);
-            raiz = new No(scan.nextInt());
-            while(scan.hasNextInt()) {
-                int chave = scan.nextInt();
-                preencher(raiz, chave);
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            raiz = null;
-            System.out.println("Raiz inválida!");
-        }
-
-        calcularAltura(raiz);
-        contarSubNos(raiz);
-        // System.out.println(raiz.getSubEsquerda()); //3
-        // System.out.println(raiz.getSubDireita()); //2
-        // System.out.println(raiz.getEsquerda().getSubEsquerda()); //1
-        // System.out.println(raiz.getEsquerda().getSubDireita()); //1
-        // System.out.println(raiz.getEsquerda().getEsquerda().getSubDireita()); //0
-        // System.out.println(raiz.getDireita().getSubDireita()); //1
-        // System.out.println(raiz.getDireita().getSubEsquerda()); //0
-
-        //Leitura dos comandos
-        rel = "../../entrada/"+args[1]+".txt";
-        file = new File(abs+rel);
-        Scanner scanComandos;
-        if (!file.exists()){
-            file = new File(abs+"../"+rel);
-            if (!file.exists()){
-                System.out.println("Nome de arquivo errado!");
-                System.exit(0);
-            }
-        }
-        
-        try {
-            scanComandos = new Scanner(file);
-            while(scanComandos.hasNextLine()) {
-                String line = scanComandos.nextLine();
-
-                Scanner sc = new Scanner(line);
-                String comando = sc.next();
-                if (comando.matches("ENESIMO|INSIRA|IMPRIMA|REMOVA|POSICAO|BUSCAR|MEDIA")) {
-                    // comando.equals("ENESIMO") comando.equals("INSIRA") comando.equals("IMPRIMA") 
-                    // comando.equals("REMOVA") comando.equals("POSICAO") comando.equals("BUSCAR")
-                    int chaveComando = sc.nextInt();
-                    switch (comando) {   
-                        case "INSIRA":   
-                            if(preencher(raiz, chaveComando)){
-                                System.out.println(chaveComando+" adicionado");
-                                calcularAltura(raiz);
-                                contarSubNos(raiz);
-                            }else{
-                                System.out.println(chaveComando +" Já está na árvore, não pode ser inserido");
-                            }
-                            break;  
-                        case "IMPRIMA": 
-                            imprimir(raiz, chaveComando);
-                            break;  
-                        case "REMOVA": 
-                            if(remover(raiz, chaveComando)){
-                                System.out.println(chaveComando+" removido");
-                                calcularAltura(raiz);
-                                contarSubNos(raiz);
-                            }else{
-                                System.out.println(chaveComando +" não está na árvore, não pode ser removido");
-                            }
-                            break;  
-                        default:   
-                            System.out.println("Comando não encontrado");  
-                        }
-                } else {
-                    if(comando.equals("PREORDEM")){
-                        String sequencia = "";
-                        sequencia = preOrdem(raiz, sequencia);
-                        System.out.println(sequencia);
-                    }
-                }
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }   
     }
 }
