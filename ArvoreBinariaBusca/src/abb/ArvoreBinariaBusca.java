@@ -144,92 +144,43 @@ public class ArvoreBinariaBusca {
         }
         return ret;
     }
-
-    public static boolean isFolha(No raiz){
-        return (raiz.getEsquerda()==null && raiz.getDireita()==null);
-    }
-    public static boolean subArvoresNaoVazias(No raiz){
-        return (raiz.getEsquerda()!=null && raiz.getDireita()!=null);
-    }
-
-    public static No filhoNaoNulo(No raiz){
-        No no = raiz.getEsquerda();
-        if (no == null) {
-            no = raiz.getDireita();
-        }
-        return no;
-    }
     
+    public static Boolean checarRemocao(No raiz, int chave) {
+        int qtdNos = raiz.getQtdNosDireita()+raiz.getQtdNosEsquerda();
+        raiz = remover(raiz, chave);
+        contarSubNos(raiz);
+        int qtdNosApos = raiz.getQtdNosDireita()+raiz.getQtdNosEsquerda();
+        return (qtdNos!=qtdNosApos);
+    }
+
     public static int trocar(No raiz){
-        No no = raiz.getDireita();
-        while(no.getEsquerda()!=null){
-            no=no.getEsquerda();
+        No no = raiz.getEsquerda();
+        while(no.getDireita()!=null){
+            no=no.getDireita();
         }
-        int ret = no.getChave(); //60
-        no.setChave(raiz.getChave());
+        int ret = no.getChave();
         return ret;
     }
 
-    public static boolean apagarFilho(No raiz, int chave){
-        boolean ret = true;
-        if (isFolha(raiz.getDireita())) {
-            raiz.setDireita(null);
-        } else if(subArvoresNaoVazias(raiz.getDireita())){
-            return remover(raiz.getDireita(), chave);
-        }else{
-            No node = filhoNaoNulo(raiz.getDireita());
-            if(node.getChave()>raiz.getChave()){
-                raiz.setDireita(node);
-            }else{ 
-                raiz.setEsquerda(node);
-            }
-        }
-        return ret;
-    }
-
-    public static boolean remover(No raiz, int chave) {
-        boolean ret = true;
-        No esquerda = raiz.getEsquerda();
-        No direita = raiz.getDireita();
-
-        if(chave==raiz.getChave()){
-            if(subArvoresNaoVazias(raiz)) {
-                raiz.setChave(trocar(raiz));
-                apagarFilho(raiz, chave);
-            }else{
-                No node = filhoNaoNulo(raiz);
-                raiz.setChave(node.getChave());
-                raiz.setEsquerda(node.getEsquerda());
-                raiz.setDireita(node.getDireita());
-            }
-        } else if (esquerda != null && chave == esquerda.getChave()) {
-            if(isFolha(esquerda)){
-                raiz.setEsquerda(null);
-            }else if(subArvoresNaoVazias(esquerda)) {
-                esquerda.setChave(trocar(esquerda));
-                apagarFilho(esquerda, chave);
-            }else{
-                raiz.setEsquerda(filhoNaoNulo(esquerda));
-            }
-        } else if (direita != null && chave == direita.getChave()) {
-            if(isFolha(direita)){
-                raiz.setDireita(null);
-            }else if(subArvoresNaoVazias(direita)){
-                direita.setChave(trocar(direita));
-                apagarFilho(direita, chave);
-            }else{
-                raiz.setDireita(filhoNaoNulo(direita));
-            }
-        } else {
-            if (chave < raiz.getChave() && esquerda != null) {
-                ret = remover(esquerda, chave);
-            } else if (chave > raiz.getChave() && direita != null) {
-                ret = remover(direita, chave);
+    public static No remover(No raiz, int chave) {
+        if (raiz != null) {
+            if (chave < raiz.getChave()) {
+                raiz.setEsquerda(remover(raiz.getEsquerda(), chave));
+            } else if (chave > raiz.getChave()) {
+                raiz.setDireita(remover(raiz.getDireita(), chave));
             }else {
-                return false;
+                if (raiz.getEsquerda()==null) {
+                    return raiz.getDireita();
+                }else if (raiz.getDireita()==null) {
+                    return raiz.getEsquerda();
+                }else{
+                    int temp = trocar(raiz);
+                    raiz.setChave(temp);
+                    raiz.setEsquerda(remover(raiz.getEsquerda(), temp));
+                }
             }
         }
-        return ret;
+        return raiz;
     }
 
     public static void contarSubNos(No raiz) {

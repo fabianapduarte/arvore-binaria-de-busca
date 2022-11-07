@@ -60,8 +60,6 @@ public class mainAbb {
                 try (Scanner sc = new Scanner(line)) {
                     String comando = sc.next();
                     if (comando.matches("ENESIMO|INSIRA|IMPRIMA|REMOVA|POSICAO|BUSCAR|MEDIA")) {
-                        // comando.equals("ENESIMO") comando.equals("INSIRA") comando.equals("IMPRIMA") 
-                        // comando.equals("REMOVA") comando.equals("POSICAO") comando.equals("BUSCAR")
                         int chaveComando = sc.nextInt();
                         switch (comando) {   
                             case "INSIRA":   
@@ -77,10 +75,9 @@ public class mainAbb {
                                 ArvoreBinariaBusca.imprimir(raiz, chaveComando);
                                 break;  
                             case "REMOVA": 
-                                if(ArvoreBinariaBusca.remover(raiz, chaveComando)){
+                                if( ArvoreBinariaBusca.checarRemocao(raiz, chaveComando)){
                                     System.out.println(chaveComando+" removido");
                                     ArvoreBinariaBusca.calcularAltura(raiz);
-                                    ArvoreBinariaBusca.contarSubNos(raiz);
                                 }else{
                                     System.out.println(chaveComando +" não está na árvore, não pode ser removido");
                                 }
@@ -96,6 +93,14 @@ public class mainAbb {
                             case "MEDIA":
                                 double media = ArvoreBinariaBusca.media(raiz, chaveComando);
                                 System.out.println(String.format("%,.3f", media));
+                                break;
+                            case "BUSCAR":
+                                No no = ArvoreBinariaBusca.buscar(raiz, chaveComando);
+                                if(no!=null){
+                                    System.out.println("Chave encontrada");
+                                }else{
+                                    System.out.println("Chave não encontrada");
+                                }
                                 break;
                             default:   
                                 System.out.println("Comando não encontrado");  
