@@ -11,17 +11,14 @@ public class mainAbb {
     public static void main(String[] args) {
         No raiz;
         String abs = ArvoreBinariaBusca.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-        String rel = "../../entrada/"+args[0]+".txt";
-        File file = new File(abs+rel);
+        String rel = "../../../entrada/";
+        File file = new File(abs+rel+args[0]+".txt");
 
         //Leitura da arvore
         Scanner scan;
         if (!file.exists()){
-            file = new File(abs+"../"+rel); 
-            if (!file.exists()){
-                System.out.println("Nome de arquivo errado!");
-                System.exit(0);
-            }
+            System.out.println("Nome de arquivo 1 errado! - "+args[0]);
+            System.exit(0);
         }
         
         try {
@@ -41,15 +38,11 @@ public class mainAbb {
         ArvoreBinariaBusca.contarSubNos(raiz);
 
         //Leitura dos comandos
-        rel = "../../entrada/"+args[1]+".txt";
-        file = new File(abs+rel);
+        file = new File(abs+rel+args[1]+".txt");
         Scanner scanComandos;
         if (!file.exists()){
-            file = new File(abs+"../"+rel);
-            if (!file.exists()){
-                System.out.println("Nome de arquivo errado!");
-                System.exit(0);
-            }
+            System.out.println("Nome de arquivo 2 errado! - "+args[1]);
+            System.exit(0);
         }
         
         try {
