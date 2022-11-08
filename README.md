@@ -1,11 +1,11 @@
 <h1 align="center"> 
-	Árvore binária de busca
+	🌳 Árvore binária de busca 🔍
 </h1>
 
 <p align="center">
  <a href="#-sobre-o-projeto">Sobre</a> •
  <a href="#-funcionalidades">Funcionalidades</a> •
- <a href="#-interface">Interface</a> • 
+ <a href="#-exemplo">Exemplo</a> • 
  <a href="#-como-executar-o-projeto">Como executar</a> •
  <a href="#-autores">Autores</a>
 </p>
@@ -34,7 +34,7 @@ Clique [aqui](https://docs.google.com/document/d/1VuMgOgqID095fgwAZYU5_QYHJEwqrg
 
 ---
 
-## 🎨 Interface
+## 📑 Exemplo
 
 <p align="center">
   <img src="./.github/terminal.png" alt="Terminal" width="800px" style="margin: 16px 0" />
@@ -63,6 +63,8 @@ $ git clone https://github.com/fabianapduarte/arvore-binaria-de-busca.git
 $ cd arvore-binaria-de-busca
 
 ```
+
+<br />
 
 ### Rodando o projeto com os arquivos presentes em `/entrada`
 
