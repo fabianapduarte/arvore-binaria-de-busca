@@ -210,6 +210,9 @@ public class ArvoreBinariaBusca {
             return somaNosAnteriores + raiz.getQtdNosEsquerda() + 1;
         } else if (raiz.getChave() > elemento) {
             No noEsquerda = raiz.getEsquerda();
+            if (noEsquerda==null) {
+                return 0;
+            }
             if (somaNosAnteriores != 0) {
                 novaSoma = somaNosAnteriores + raiz.getQtdNosEsquerda() - noEsquerda.getQtdNosEsquerda() - noEsquerda.getQtdNosDireita() - 1;
             } else {
@@ -218,6 +221,9 @@ public class ArvoreBinariaBusca {
             return posicao(noEsquerda, elemento, novaSoma);
         } else {
             novaSoma = somaNosAnteriores + raiz.getQtdNosEsquerda() + 1;
+            if (raiz.getDireita()==null) {
+                return 0;
+            }
             return posicao(raiz.getDireita(), elemento, novaSoma);
         }
     }
@@ -228,8 +234,14 @@ public class ArvoreBinariaBusca {
         if (posicaoAtual == posicao) {
             return raiz.getChave();
         } else if (posicaoAtual > posicao) {
+            if (raiz.getEsquerda()==null) {
+                return 0;                
+            }
             return enesimoElemento(raiz.getEsquerda(), posicao);
         } else {
+            if (raiz.getDireita()==null) {
+                return 0;                
+            }
             return enesimoElemento(raiz.getDireita(), posicao - raiz.getQtdNosEsquerda() - 1);
         }
     }
@@ -260,6 +272,9 @@ public class ArvoreBinariaBusca {
 
     public static double media(No raiz, int elemento) {
         No noParaMedia = buscar(raiz, elemento);
+        if (noParaMedia==null) {
+            return 0;
+        }
         int soma = somaElementos(noParaMedia, 0);
         int totalElementos = noParaMedia.getQtdNosEsquerda() + noParaMedia.getQtdNosDireita() + 1;
         return (double) soma / totalElementos;
