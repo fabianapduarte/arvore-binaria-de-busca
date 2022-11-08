@@ -118,13 +118,14 @@ public class ArvoreBinariaBusca {
 
     public static boolean ehCheia(No raiz, int altura){
         boolean ret = true;
-        if ((raiz.getDireita()==null || raiz.getEsquerda()==null) && altura!=1) { //folha
+        boolean vazio = (raiz.getDireita()==null || raiz.getEsquerda()==null);
+        if (vazio && altura>1) { //folha
             return false;
         }
-        if(raiz.getEsquerda()!=null){
+        if(raiz.getEsquerda()!=null && altura>2){
             ret = ehCheia(raiz.getEsquerda(), altura-1);
         }
-        if(raiz.getDireita()!=null){
+        if(raiz.getDireita()!=null && altura>2){
             ret = ehCheia(raiz.getDireita(), altura-1);
         }
         return ret;
@@ -136,10 +137,10 @@ public class ArvoreBinariaBusca {
         if ((vazio && altura>2)) { //folha
             return false;
         }
-        if(raiz.getEsquerda()!=null){
+        if(raiz.getEsquerda()!=null && altura>3){
             ret = ehCompleta(raiz.getEsquerda(), altura-1);
         }
-        if(raiz.getDireita()!=null){
+        if(raiz.getDireita()!=null && altura>3){
             ret = ehCompleta(raiz.getDireita(), altura-1);
         }
         return ret;
