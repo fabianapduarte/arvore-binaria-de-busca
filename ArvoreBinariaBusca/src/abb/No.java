@@ -1,5 +1,9 @@
 package abb;
 
+/**
+ * Classe para o nó da árvore binária de busca
+ * @author Fabiana Pereira e Samuel Costa
+ */
 public class No {
     private int chave;
     private No esquerda;
@@ -21,42 +25,42 @@ public class No {
     }
 
     public No getEsquerda() {
-      return esquerda;
+        return esquerda;
     }
 
     public void setEsquerda(No esquerda) {
-      this.esquerda = esquerda;
+        this.esquerda = esquerda;
     }
 
     public No getDireita() {
-      return direita;
+        return direita;
     }
 
     public void setDireita(No direita) {
-      this.direita = direita;
+        this.direita = direita;
     }
 
-    public int getQtdNosEsquerda(){
-      return qtdNosEsquerda;
+    public int getQtdNosEsquerda() {
+        return qtdNosEsquerda;
     }
 
-    public void setQtdNosEsquerda(int qtdNosEsquerda){
-      this.qtdNosEsquerda = qtdNosEsquerda;
+    public void setQtdNosEsquerda(int qtdNosEsquerda) {
+        this.qtdNosEsquerda = qtdNosEsquerda;
     }
 
-    public int getQtdNosDireita(){
-      return qtdNosDireita;
+    public int getQtdNosDireita() {
+        return qtdNosDireita;
     }
 
-    public void setQtdNosDireita(int qtdNosDireita){
-      this.qtdNosDireita = qtdNosDireita;
+    public void setQtdNosDireita(int qtdNosDireita) {
+        this.qtdNosDireita = qtdNosDireita;
     }
 
-    public int getAltura(){
-      return altura;
+    public int getAltura() {
+        return altura;
     }
 
-    public void setAltura(int altura){
-      this.altura = altura;
+    public void setAltura(int altura) {
+        this.altura = altura;
     }
 }
