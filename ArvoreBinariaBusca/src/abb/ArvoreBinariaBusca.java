@@ -1,7 +1,7 @@
 package abb;
 
 /**
- *
+ * Classe para os métodos de manipulação e análise da árvore binária de busca
  * @author Fabiana Pereira e Samuel Costa
  */
 public class ArvoreBinariaBusca {
@@ -116,47 +116,47 @@ public class ArvoreBinariaBusca {
         return ret;
     }
 
-    public static boolean ehCheia(No raiz, int altura){
+    public static boolean ehCheia(No raiz, int altura) {
         boolean ret = true;
-        if ((raiz.getDireita()==null || raiz.getEsquerda()==null) && altura!=1) { //folha
+        if ((raiz.getDireita() == null || raiz.getEsquerda() == null) && altura != 1) { // folha
             return false;
         }
-        if(raiz.getEsquerda()!=null){
-            ret = ehCheia(raiz.getEsquerda(), altura-1);
+        if (raiz.getEsquerda() != null) {
+            ret = ehCheia(raiz.getEsquerda(), altura - 1);
         }
-        if(raiz.getDireita()!=null){
-            ret = ehCheia(raiz.getDireita(), altura-1);
+        if (raiz.getDireita() != null) {
+            ret = ehCheia(raiz.getDireita(), altura - 1);
         }
         return ret;
     }
 
-    public static boolean ehCompleta(No raiz, int altura){
+    public static boolean ehCompleta(No raiz, int altura) {
         boolean ret = true;
-        boolean vazio = (raiz.getDireita()==null || raiz.getEsquerda()==null);
-        if ((vazio && altura>2)) { //folha
+        boolean vazio = (raiz.getDireita() == null || raiz.getEsquerda() == null);
+        if ((vazio && altura > 2)) { // folha
             return false;
         }
-        if(raiz.getEsquerda()!=null){
-            ret = ehCompleta(raiz.getEsquerda(), altura-1);
+        if (raiz.getEsquerda() != null) {
+            ret = ehCompleta(raiz.getEsquerda(), altura - 1);
         }
-        if(raiz.getDireita()!=null){
-            ret = ehCompleta(raiz.getDireita(), altura-1);
+        if (raiz.getDireita() != null) {
+            ret = ehCompleta(raiz.getDireita(), altura - 1);
         }
         return ret;
     }
-    
+
     public static Boolean checarRemocao(No raiz, int chave) {
-        int qtdNos = raiz.getQtdNosDireita()+raiz.getQtdNosEsquerda();
+        int qtdNos = raiz.getQtdNosDireita() + raiz.getQtdNosEsquerda();
         raiz = remover(raiz, chave);
         contarSubNos(raiz);
-        int qtdNosApos = raiz.getQtdNosDireita()+raiz.getQtdNosEsquerda();
-        return (qtdNos!=qtdNosApos);
+        int qtdNosApos = raiz.getQtdNosDireita() + raiz.getQtdNosEsquerda();
+        return (qtdNos != qtdNosApos);
     }
 
-    public static int trocar(No raiz){
+    public static int trocar(No raiz) {
         No no = raiz.getEsquerda();
-        while(no.getDireita()!=null){
-            no=no.getDireita();
+        while (no.getDireita() != null) {
+            no = no.getDireita();
         }
         int ret = no.getChave();
         return ret;
@@ -168,12 +168,12 @@ public class ArvoreBinariaBusca {
                 raiz.setEsquerda(remover(raiz.getEsquerda(), chave));
             } else if (chave > raiz.getChave()) {
                 raiz.setDireita(remover(raiz.getDireita(), chave));
-            }else {
-                if (raiz.getEsquerda()==null) {
+            } else {
+                if (raiz.getEsquerda() == null) {
                     return raiz.getDireita();
-                }else if (raiz.getDireita()==null) {
+                } else if (raiz.getDireita() == null) {
                     return raiz.getEsquerda();
-                }else{
+                } else {
                     int temp = trocar(raiz);
                     raiz.setChave(temp);
                     raiz.setEsquerda(remover(raiz.getEsquerda(), temp));
